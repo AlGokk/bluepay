@@ -1,0 +1,26 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: BlueberryPayFactory
+    network: fuji
+    source:
+      address: "0xf189e9EBCE19Ca3FC94427e64d4fa64D4118a180"
+      abi: BlueberryPayFactory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - OrderBookCreated
+        - PaymentSystemCreated
+      abis:
+        - name: BlueberryPayFactory
+          file: ./abis/BlueberryPayFactory.json
+      eventHandlers:
+        - event: OrderBookCreated(indexed address,indexed address,address)
+          handler: handleOrderBookCreated
+        - event: PaymentSystemCreated(indexed address,indexed address,uint256)
+          handler: handlePaymentSystemCreated
+      file: ./src/mapping.ts
