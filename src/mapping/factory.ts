@@ -35,7 +35,7 @@ export function handleOrderBookCreated(event: OrderBookCreated): void {
   entity._orderBookUID = event.params.orderBookUID;
   entity._timestamp = timestamp;
 
-  BlueberryPayOrderBookTemplate.create(event.params._paymentSystemUID);
+  BlueberryPayOrderBookTemplate.create(event.params.orderBookUID);
   entity.save();
 }
 
