@@ -5,7 +5,6 @@ import {
   OrderUpdated,
 } from '../../generated/templates/BlueberryPayOrderBook/BlueberryPayOrderBook';
 import { Order } from '../../generated/schema';
-import { BlueberryPayOrderBook as BlueberryPayOrderBookTemplate } from '../../generated/templates';
 
 export function handleOrderCreated(event: OrderCreated): void {
   let timestamp = event.block.timestamp;
