@@ -11,49 +11,6 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class Factory extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
-    this.set("orderBookCount", Value.fromI32(0));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save Factory entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        `Entities of type Factory must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
-      );
-      store.set("Factory", id.toString(), this);
-    }
-  }
-
-  static load(id: string): Factory | null {
-    return changetype<Factory | null>(store.get("Factory", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get orderBookCount(): i32 {
-    let value = this.get("orderBookCount");
-    return value!.toI32();
-  }
-
-  set orderBookCount(value: i32) {
-    this.set("orderBookCount", Value.fromI32(value));
-  }
-}
-
 export class PaymentSystem extends Entity {
   constructor(id: string) {
     super();

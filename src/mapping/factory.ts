@@ -3,39 +3,39 @@ import {
   OrderBookCreated,
   PaymentSystemCreated,
 } from '../../generated/BlueberryPayFactory/BlueberryPayFactory';
-import { Factory, PaymentSystem, OrderBook } from '../../generated/schema';
-// This is templae not schema
-import { FACTORY_ADDRESS } from './helper';
+import { PaymentSystem, OrderBook } from '../../generated/schema';
+import { BlueberryPayOrderBook as BlueberryPayOrderBookTemplate } from '../../generated/templates';
+
 export function handlePaymentSystemCreated(event: PaymentSystemCreated): void {
-  let factory = Factory.load(FACTORY_ADDRESS);
-  if (factory === null) {
-    factory = new Factory(FACTORY_ADDRESS);
-    factory.orderBookCount = 0;
-  }
+  let entity = PaymentSystem.load(event.transaction.from.toHex());
   let timestamp = event.block.timestamp;
-  let entity = new PaymentSystem(
-    event.params._paymentSystemOwner.toHexString()
-  );
+  if (!entity) {
+    entity = new PaymentSystem(event.transaction.from.toHex());
+    entity.count = BigInt.fromI32(0);
+  }
+
   entity.count = entity.count + BigInt.fromI32(1);
   entity._paymentSystemOwner = event.params._paymentSystemOwner;
   entity._paymentSystemUID = event.params._paymentSystemUID;
   entity._timestamp = timestamp;
   // Entities can be written to the store with `.save()`
   entity.save();
-  factory.save();
 }
 
 export function handleOrderBookCreated(event: OrderBookCreated): void {
+  let entity = OrderBook.load(event.transaction.from.toHex());
   let timestamp = event.block.timestamp;
-  let entity = new OrderBook(
-    event.params.orderBookUID.toHexString()
-  ) as OrderBook;
+  if (!entity) {
+    entity = new OrderBook(event.transaction.from.toHex()) as OrderBook;
+    entity.count = BigInt.fromI32(0);
+  }
   entity.count = entity.count + BigInt.fromI32(1);
   entity._paymentSystemOwner = event.params._paymentSystemOwner;
   entity._paymentSystemUID = event.params._paymentSystemUID;
   entity._orderBookUID = event.params.orderBookUID;
   entity._timestamp = timestamp;
 
+  BlueberryPayOrderBookTemplate.create(event.params._paymentSystemUID);
   entity.save();
 }
 

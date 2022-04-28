@@ -1,11 +1,3 @@
-type Factory @entity {
-  # factory address
-  id: ID!
-
-  # pair info
-  orderBookCount: Int!
-}
-
 type PaymentSystem @entity {
   id: ID!
   count: BigInt!
