@@ -1,0 +1,1 @@
+export const FACTORY_ADDRESS = '0xf189e9ebce19ca3fc94427e64d4fa64d4118a180';

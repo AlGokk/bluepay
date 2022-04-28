@@ -4,7 +4,7 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ algokk/blue-pay",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/algokk/blue-pay",
     "create-local": "graph create --node http://localhost:8020/ algokk/blue-pay",
     "remove-local": "graph remove --node http://localhost:8020/ algokk/blue-pay",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 algokk/blue-pay"
